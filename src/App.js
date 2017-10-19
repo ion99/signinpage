@@ -5,30 +5,44 @@ const inputButtonStyle = {
   margin: '5px'
 };
 
+const id = () => Math.floor(Math.random() * 10000);
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      //list: ['dog', 'cat', 'penguin', 'lion', 'wolf'],
+      emailInputValue: '',
+      passwordInputValue: '',
       credenciales: {}
-    };  
+    };
+    
+    this.updateEmailInputValue = this.updateEmailInputValue.bind(this);
+    this.updatePasswordInputValue = this.updatePasswordInputValue.bind(this);
   }
 
+  updateEmailInputValue(e) {
+    this.setState({
+      emailInputValue: e.target.value
+    })
+  }
+
+  updatePasswordInputValue(e) {
+    this.setState({
+      passwordInputValue: e.target.value
+    })
+  } 
+
   onSignIn() {
-    const id = () => Math.floor(Math.random() * 10000);
-    const email = document.getElementById("useremail").value.toLowerCase();
-     
-    const password = document.getElementById("password").value;
 
     this.setState({ 
-      credenciales: Object.assign(this.state.credenciales, {id:  id(), user: email, userPassword: password})
+      credenciales: Object.assign(this.state.credenciales, {id:  id(), user: this.state.emailInputValue, userPassword: this.state.passwordInputValue})
     });
 
-    document.getElementById("password").value = "";
-    document.getElementById("useremail").value = "";
-   
+    const userName = this.state.emailInputValue.slice(0, this.state.emailInputValue.indexOf("@"));
+    
     document.querySelector("form").style.display = "none";
-    document.querySelector("h1").innerHTML = "I am a New Page!";
+    document.querySelector("h1").innerHTML = `Successfully Signed In ${userName}!`;
+    
     console.log('credentiales: ', this.state);
   } 
 
@@ -36,11 +50,11 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Hello World!</h1>
-        <form>
-          <input type="text" id="useremail" placeholder="Email Address..." style={inputButtonStyle} />
+        <h1 ref="greet">Hello World!</h1>
+        <form ref="signIn">
+          <input type="text" id="useremail" placeholder="Email Address..." value={this.state.emailInputValue} onChange={this.updateEmailInputValue} style={inputButtonStyle} />
           <br/>
-          <input type="password" id="password" placeholder="Password..." style={inputButtonStyle} />
+          <input type="password" id="password" placeholder="Password..." value={this.state.passwordInputValue} onChange={this.updatePasswordInputValue} style={inputButtonStyle} />
           <br/>
           <button id="button" type="button" className="btn btn-primary" onClick={ () => this.onSignIn() }>Sign In</button>
         </form>
