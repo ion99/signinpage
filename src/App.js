@@ -33,7 +33,7 @@ class App extends Component {
   } 
 
   onSignIn() {
-    const id = () => Math.floor(Math.random() * 10000);
+    const id = () => Number(Math.random().toString().substr(2,5));
 
     if (this.state.emailInputValue !== "" && this.state.passwordInputValue !== "") {
       this.setState({
