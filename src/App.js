@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Success from './Components/Success';
 
 const inputButtonStyle = {
   margin: '5px'
@@ -62,14 +63,6 @@ class App extends Component {
       </div> 
     );
   }
-}
-
-const Success = () => {
-  return (
-    <div>
-      <h1>Successfully Signed In!</h1>
-    </div>
-  )
 }
 
 export default App;
